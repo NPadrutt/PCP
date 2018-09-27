@@ -6,14 +6,6 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/ninop/Documents/Git/PCP/Uebung1_B/main.c
-stdio.h
--
-stdlib.h
--
-stack.h
-C:/Users/ninop/Documents/Git/PCP/Uebung1_B/stack.h
-
 C:/Users/ninop/Documents/Git/PCP/Uebung1_B/stack.c
 stdio.h
 -
