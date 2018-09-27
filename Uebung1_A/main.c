@@ -32,9 +32,14 @@ void printNumbersGoto(int n){
 }
 
 void printNumbersFor(int n) {
-
+    for (int i = 0; i <= n; ++i) {
+        printf("%i ", i);
+    }
 }
 
 void printNumbersRecursiveFunction(int n) {
+    if(n < 0) return;
 
+    printNumbersRecursiveFunction(n - 1);
+    printf("%i ", n);
 }
