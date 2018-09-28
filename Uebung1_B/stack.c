@@ -66,9 +66,9 @@ void print(stack s) {
 
 int isEmpty(stack s){
     if(s.index == STACK_EMPTY_INDEX){
-        return 0;
+        return 1;
     }
-    return 1;
+    return 0;
 }
 
 int size(stack s){
