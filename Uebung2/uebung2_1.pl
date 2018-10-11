@@ -14,3 +14,6 @@ sibling(X,Y) :- parent(Z,X), parent(Z,Y).
 grandmother(X,Y) :- mother(X,Z), parent(Z,Y).
 offspring(X,Y) :- parent(Y,X).
 offspring(X,Y) :- parent(Z,X), offspring(Z,Y).
+
+:- op(1150, xfx, mother).
+:- op(1150, xfx, offspring).
