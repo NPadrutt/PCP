@@ -23,8 +23,8 @@
    )
  )
 
-(b-length(make-human 17 "m" 180) )
-(b-length(make-human 62 "m" 180) )
+(b-length(make-human 17 "m" 20) )
+(b-length(make-human 62 "m" 20) )
 
-(b-length(make-human 17 "f" 150) )
-(b-length(make-human 62 "f" 150) )
+(b-length(make-human 17 "f" 15) )
+(b-length(make-human 62 "f" 15) )
