@@ -24,3 +24,5 @@
 ; Beispielliste
 (define aList (list 3 5 14 6 4 23 6 77 31 30 2))
 
+; Beispiel Sortiern
+(sort-a-list < aList)
