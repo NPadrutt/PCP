@@ -67,19 +67,64 @@
     
     ; ab hier die Gitterlinien-Funktionen...
 
-    ; Horizontale Linien
+    ; Horizontale Linie
     (define (draw_horizontal yPosition)
       (cond
-        ((< yPosition layer_width)
+        ((< yPosition layer_height)
          (draw_line 0 yPosition layer_width yPosition)
          (draw_horizontal (+ yPosition spacing))
         )
        )
      )
 
+    ; Horizontale Linie dashed
+    (define (draw_horizontal_dashed xPosition yPosition)
+      (cond
+        ((< yPosition layer_height)
+         (cond
+           ((<= xPosition layer_width)
+           (draw_line xPosition yPosition (+ xPosition spacing) yPosition)
+           (draw_horizontal_dashed (+ xPosition (* 2 spacing)) yPosition)
+           )
+           (else (draw_horizontal_dashed 0 (+ yPosition spacing)))
+          )
+        )
+       )
+     )
+
+    ; Vertikale Linie
+    (define (draw_vertical xPosition)
+      (cond
+        ((< xPosition layer_width)
+         (draw_line xPosition 0 xPosition layer_height )
+         (draw_vertical (+ xPosition spacing))
+        )
+       )
+     )
+
+    
+    ; Vertikale Linie dashed
+    (define (draw_vertical_dashed xPosition yPosition)
+      (cond
+        ((< xPosition layer_width)
+         (cond
+           ((<= yPosition layer_height)
+           (draw_line xPosition yPosition xPosition (+ yPosition spacing))
+           (draw_vertical_dashed xPosition (+ yPosition (* 2 spacing)))
+           )
+           (else (draw_vertical_dashed (+ xPosition spacing) 0))
+          )
+        )
+       )
+     )
+
      (cond
-        ((and (eq? horizontal TRUE) (eq? vertical FALSE) (eq? dashed FALSE))
-         (draw_horizontal spacing))
+        ((and (eq? horizontal TRUE) (eq? vertical FALSE) (eq? dashed FALSE)) (draw_horizontal spacing))
+        ((and (eq? horizontal TRUE) (eq? vertical FALSE) (eq? dashed TRUE)) (draw_horizontal_dashed 0 spacing))
+        ((and (eq? horizontal FALSE) (eq? vertical TRUE) (eq? dashed FALSE)) (draw_vertical spacing))        
+        ((and (eq? horizontal FALSE) (eq? vertical TRUE) (eq? dashed TRUE)) (draw_vertical_dashed spacing 0))        
+        ((and (eq? horizontal TRUE) (eq? vertical TRUE) (eq? dashed TRUE)) (draw_horizontal spacing) (draw_vertical spacing))        
+        ((and (eq? horizontal TRUE) (eq? vertical TRUE) (eq? dashed TRUE)) (draw_horizontal_dashed 0 spacing) (draw_vertical_dashed spacing 0))
       )
     
     ; ...Ende der Gitterlinien-Funktionen
