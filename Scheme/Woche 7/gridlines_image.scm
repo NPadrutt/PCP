@@ -1,36 +1,36 @@
 ; GIMP Skript das ein konfigurierbares Gitternetz im GIMP zeichnet
 ; Im GIMP und im Menu registrieren
 (script-fu-register 
- "script-fu-grid-lines" ; Funktionsname
+ "script-fu-grid-lines-image" ; Funktionsname
  "New gridlines"	; Menu Punkt
  "Illustrates the structure of a GIMP script" ; Beschreibung
  "Roger Diehl"          ; Autor
  "2018, HSLU - I"     ; Copyright Notiz
  "October 2018"         ; Erstellungsdatum
  ""                     ; Bild Typ des Skript - "" heisst, es muss kein Bild geladen sein
- ; aktuelle Parameter von script-fu-grid-lines
- SF-ADJUSTMENT "Image width" '(200 10 10000 1 1 0 1) ; drawable_width - default 200
- SF-ADJUSTMENT "Image height" '(200 10 10000 1 1 0 1); drawable_height - default 200
+ ; aktuelle Parameter von script-fu-grid-lines-image
+ SF-IMAGE "Image" 0
  SF-ADJUSTMENT "Spacing" '(20 2 100 1 1 0 1)         ; spacing - default 20
  SF-BRUSH "Brush" '("Circle (01)" 100.0 1 0)         ; brush - default Circle (01)
- SF-COLOR "Background" '(255 255 255)                ; background color - default black
- SF-COLOR "Foreground" '(0 0 0)                      ; foreground color - default white
- SF-TOGGLE "Transparent Layer" FALSE                 ; transparent - default FALSE
+ SF-ADJUSTMENT "Brush Size" '(4 1 100 1 10 0 1)
+ SF-COLOR "Foreground" '(255 255 255)                ; foreground color - default white
  SF-TOGGLE "Horizontal lines" TRUE                   ; horizontal - default TRUE
  SF-TOGGLE "Vertical lines" FALSE                    ; vertical - default FALSE
  SF-TOGGLE "Dashed lines" FALSE                      ; dashed - default FALSE
  )
-(script-fu-menu-register "script-fu-grid-lines"
-                         "<Image>/File/Create/Gridlines")
+(script-fu-menu-register "script-fu-grid-lines-image"
+                         "<Image>/File/Gridlines_Image")
 
 ; Das eigentliche Skript
-(define (script-fu-grid-lines drawable_width drawable_height spacing brush background foreground transparent horizontal vertical dashed)
+(define (script-fu-grid-lines-image image spacing brush brush-size foreground horizontal vertical dashed)
   
   (gimp-context-push)
   (let*(
         ; Grundeinstellungen - Farbe, Breite, Höhe, Ebene...
         (color 0)
-        (image (car(gimp-image-new drawable_width drawable_height RGB)))
+        (drawable_width (car(gimp-image-width image)))
+	(drawable_height (car(gimp-image-height image)))
+        
         (layer (car(gimp-layer-new image drawable_width drawable_height RGBA-IMAGE "grid-layer" 100 NORMAL-MODE)))
         (layer_width (car(gimp-drawable-width layer)))
         (layer_height (car(gimp-drawable-height layer)))
@@ -39,13 +39,11 @@
         (invert FALSE)
         )
     ; Gimp Kontext sezten - Transparenz, Hintergrund, Vordergrund, Pinsel, Füllfarbe, Ebene...
-    (if(= transparent TRUE)
-       (set! color TRANSPARENT-FILL)
-       (set! color BACKGROUND-FILL)
-       )
-    (gimp-context-set-background background)
-    (gimp-context-set-foreground  foreground)
+    (set! color TRANSPARENT-FILL)
+    
+    ;(gimp-context-set-foreground  foreground)
     (gimp-context-set-brush (car brush))
+    (gimp-context-set-brush-size brush-size)
     (gimp-drawable-fill layer color)
     (gimp-image-add-layer image layer -1)
     
@@ -130,8 +128,8 @@
     ; ...Ende der Gitterlinien-Funktionen
     
     ; Bild anzeigen
-    (gimp-display-new image)
     (gimp-context-pop)
     (gimp-displays-flush)
+    (gimp-image-clean-all image)
     )
   )

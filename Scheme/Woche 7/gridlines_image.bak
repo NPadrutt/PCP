@@ -21,7 +21,7 @@
  SF-TOGGLE "Dashed lines" FALSE                      ; dashed - default FALSE
  )
 (script-fu-menu-register "script-fu-grid-lines"
-                         "<Image>/File/Create/Gridlines")
+                         "<Image>/File/Create/Gridlines_Image")
 
 ; Das eigentliche Skript
 (define (script-fu-grid-lines drawable_width drawable_height spacing brush background foreground transparent horizontal vertical dashed)
@@ -123,7 +123,7 @@
         ((and (eq? horizontal TRUE) (eq? vertical FALSE) (eq? dashed TRUE)) (draw_horizontal_dashed 0 spacing))
         ((and (eq? horizontal FALSE) (eq? vertical TRUE) (eq? dashed FALSE)) (draw_vertical spacing))        
         ((and (eq? horizontal FALSE) (eq? vertical TRUE) (eq? dashed TRUE)) (draw_vertical_dashed spacing 0))        
-        ((and (eq? horizontal TRUE) (eq? vertical TRUE) (eq? dashed FALSE)) (draw_horizontal spacing) (draw_vertical spacing))        
+        ((and (eq? horizontal TRUE) (eq? vertical TRUE) (eq? dashed TRUE)) (draw_horizontal spacing) (draw_vertical spacing))        
         ((and (eq? horizontal TRUE) (eq? vertical TRUE) (eq? dashed TRUE)) (draw_horizontal_dashed 0 spacing) (draw_vertical_dashed spacing 0))
       )
     
