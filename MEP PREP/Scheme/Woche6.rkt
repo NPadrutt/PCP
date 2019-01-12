@@ -19,7 +19,7 @@
 |#
 
 ;2)
-
+#|
 (define (redouble a-list)
   (redouble-gen 2 a-list)
  )
@@ -35,3 +35,39 @@
 
 (redouble (list 3 2 1))
 (redouble-gen 3 (list 3 2 1))
+|#
+
+; 4)
+#|
+(define (delete item a-list)
+  (cond
+    ((empty? a-list) empty)
+    ((eq? item (first a-list)) (rest a-list))
+    (else
+     (cons (first a-list) (delete item (rest a-list)))
+     )
+  )
+)
+
+
+(delete 3 (list 1 2 3 4))  ; (list 1 2 4)
+(delete 'c '(a b c d))     ; (list 'a 'b 'd)
+(delete 'f '(a b c d))     ; (list 'a 'b 'c 'd)
+(delete 'f empty)          ; '()
+(delete 'f (list 1 2 3 4)) ; (list 1 2 3 4)
+|#
+
+; 5)
+#||#
+(define (contains? item a-list)
+  (cond
+    ((empty? a-list) false)
+    ((eqv? item (first a-list) ) true)
+   (else
+     (contains? item (rest a-list))
+     )
+   )
+  )
+
+(contains? 'c '(a b c d))
+(contains? 'f '(a b c d))
